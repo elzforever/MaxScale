@@ -14,6 +14,7 @@
 
 #include "clustrixmon.hh"
 #include <maxscale/monitor.hh>
+#include <maxbase/http.hh>
 
 class ClustrixMonitor : public maxscale::MonitorInstance
 {
@@ -23,8 +24,13 @@ public:
 
     static ClustrixMonitor* create(MXS_MONITOR* pMonitor);
 
+    bool configure(const MXS_CONFIG_PARAMETER* pParams) override;
+
 private:
     ClustrixMonitor(MXS_MONITOR* pMonitor);
 
     void tick();
+
+private:
+    std::vector<std::string> m_health_urls;
 };
